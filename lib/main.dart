@@ -39,6 +39,22 @@ class _QuizPageState extends State<QuizPage> {
   ];
   int currentQuestionNumber = 0;
 
+  void checkAnswer(bool selectedAnswer, bool correctAnswer) {
+    if (selectedAnswer == correctAnswer) {
+      print('user got it right');
+    } else {
+      print('user got it wrong');
+    }
+  }
+
+  void moveToNextQuestion() {
+    setState(() {
+      if (currentQuestionNumber < questions.length - 1) {
+        currentQuestionNumber += 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -75,7 +91,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
+                checkAnswer(true, answers[currentQuestionNumber]);
+                moveToNextQuestion();
               },
             ),
           ),
@@ -93,7 +110,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                checkAnswer(false, answers[currentQuestionNumber]);
+                moveToNextQuestion();
               },
             ),
           ),
