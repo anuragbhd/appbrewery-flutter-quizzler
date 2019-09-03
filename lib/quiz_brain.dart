@@ -70,4 +70,12 @@ class QuizBrain {
       _currentQuestionNumber += 1;
     }
   }
+
+  bool isFinished() {
+    return _currentQuestionNumber == _questions.length - 1;
+  }
+
+  void reset() {
+    _currentQuestionNumber = 0;
+  }
 }
