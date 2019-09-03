@@ -29,7 +29,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
-  int currentQuestionNumber = 0;
 
   void checkAnswer(bool selectedAnswer, bool correctAnswer) {
     if (selectedAnswer == correctAnswer) {
@@ -37,14 +36,6 @@ class _QuizPageState extends State<QuizPage> {
     } else {
       print('user got it wrong');
     }
-  }
-
-  void moveToNextQuestion() {
-    setState(() {
-      if (currentQuestionNumber < quizBrain.questions.length - 1) {
-        currentQuestionNumber += 1;
-      }
-    });
   }
 
   @override
@@ -59,7 +50,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questions[currentQuestionNumber].questionText,
+                quizBrain.getCurrentQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -85,9 +76,11 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 checkAnswer(
                   true,
-                  quizBrain.questions[currentQuestionNumber].questionAnswer,
+                  quizBrain.getCurrentQuestionAnswer(),
                 );
-                moveToNextQuestion();
+                setState(() {
+                  quizBrain.moveToNextQuestion();
+                });
               },
             ),
           ),
@@ -107,9 +100,11 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 checkAnswer(
                   false,
-                  quizBrain.questions[currentQuestionNumber].questionAnswer,
+                  quizBrain.getCurrentQuestionAnswer(),
                 );
-                moveToNextQuestion();
+                setState(() {
+                  quizBrain.moveToNextQuestion();
+                });
               },
             ),
           ),
