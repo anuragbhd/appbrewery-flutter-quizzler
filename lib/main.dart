@@ -30,12 +30,18 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
-  void checkAnswer(bool selectedAnswer, bool correctAnswer) {
+  void checkAnswer(bool selectedAnswer) {
+    bool correctAnswer = quizBrain.getCurrentQuestionAnswer();
+
     if (selectedAnswer == correctAnswer) {
       print('user got it right');
     } else {
       print('user got it wrong');
     }
+
+    setState(() {
+      quizBrain.moveToNextQuestion();
+    });
   }
 
   @override
@@ -74,13 +80,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(
-                  true,
-                  quizBrain.getCurrentQuestionAnswer(),
-                );
-                setState(() {
-                  quizBrain.moveToNextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -98,13 +98,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(
-                  false,
-                  quizBrain.getCurrentQuestionAnswer(),
-                );
-                setState(() {
-                  quizBrain.moveToNextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
